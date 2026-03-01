@@ -9,9 +9,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      db:
+        condition: service_healthy
     volumes:
       - ../app:/app/app
     networks:
@@ -32,6 +31,12 @@ services:
       - pgdata:/var/lib/postgresql/data
     networks:
       - chat_network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -h localhost -U postgres -d chatdb" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
 
   pgadmin:
     image: dpage/pgadmin4
@@ -42,6 +47,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
     depends_on:
       - db  # <--- Changed from ai_chat_db to db to match service key
     networks:
@@ -49,6 +56,7 @@ services:
 
 volumes:
   pgdata:
+  pgadmin_data:
 
 networks:
   chat_network:
