@@ -1,4 +1,6 @@
-from sqlalchemy import ForeignKey, Text, String
+import datetime
+
+from sqlalchemy import ForeignKey, Text, String, DateTime
 from sqlalchemy.orm import relationship, Mapped, mapped_column, declarative_base
 from typing import List
 
@@ -31,6 +33,7 @@ class Message(Base):
     session_id: Mapped[int] = mapped_column(ForeignKey('chat_sessions.id'))
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'), nullable=True)
     message: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime)
     role: Mapped[str] = mapped_column(String, default="user")
     session: Mapped["ChatSession"] = relationship("ChatSession", back_populates="messages")
 
