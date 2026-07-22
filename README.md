@@ -107,8 +107,9 @@ POST /chat
 Body:
 
 {
-  "user_id": "123",
-  "message": "Hello!"
+  "user_id": 1,
+  "message": "I need help with an assignment for my MBA",
+  "session_id": "1"
 }
 
 🧠 Optional Redis Memory (RAG)
