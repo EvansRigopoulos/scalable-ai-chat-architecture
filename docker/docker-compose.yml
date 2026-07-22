@@ -13,8 +13,11 @@ services:
         condition: service_healthy
     volumes:
       - ../app:/app/app
-      # Evidentrace SDK (local editable) — importable via PYTHONPATH
-      - /Users/evangelosrigopoulos/Documents/Evidentrace.ai/sdk:/evidentrace-sdk:ro
+      # Evidentrace SDK (local editable) — importable via PYTHONPATH.
+      # Path comes from EVIDENTRACE_SDK_PATH in docker/.env (docker compose
+      # auto-loads that file for variable substitution since it sits next
+      # to this compose file); set it to wherever you cloned the sdk repo.
+      - ${EVIDENTRACE_SDK_PATH:-/Users/evangelosrigopoulos/Documents/Evidentrace.ai/sdk}:/evidentrace-sdk:ro
     environment:
       PYTHONPATH: /evidentrace-sdk
     extra_hosts:
