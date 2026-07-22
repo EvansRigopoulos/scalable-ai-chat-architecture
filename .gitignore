@@ -1,0 +1,20 @@
+# Secrets — never commit
+.env
+docker/.env
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+lib/
+include/
+pyvenv.cfg
+
+# IDE
+.idea/
+
+# OS
+.DS_Store
+
+# Redis dump
+dump.rdb
